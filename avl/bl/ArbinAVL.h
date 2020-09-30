@@ -28,6 +28,8 @@ public:
 
     bool esVacioAVL(); //Retorna si un Arbin es vacío o no
 
+    bool existeElemento(int); // Retorna verdadero si el elemento existe, y falso caso contrario.
+
     bool insertarElem(int); //Inserta un entero en el árbol ordenado.
 
     int buscarMaximo(); //Busca el elemento de mayor valor
@@ -63,6 +65,18 @@ private:
 
     bool insertarElemRecursivo(Nodo* , Nodo*, int, int); //Inserta un entero en el árbol ordenado.
 
+    void insertarFE(Nodo*); // Inserta el factor de equilibrio en cada nodo.
+
+    void balancearAVL(Nodo*); // Modifica la estructura del árbol de forma que quede balanceado.
+
+    Nodo *rsd(Nodo*); // Modifica la estructura del árbol si fe = -2, y la raíz del sub árbol izq su fe = -1 ó 0
+
+    Nodo *rdd(Nodo *); // Modifica la estructura del árbol si fe = -2, y la raíz del sub árbol der su fe = 1
+
+    Nodo *rsi(Nodo*); // Modifica la estructura del árbol si fe = 2, y la raíz del sub árbol der su fe = 1 ó 0
+
+    Nodo *rdi(Nodo *); // Modifica la estructura del árbol si fe = 2, y la raíz del sub árbol der su fe = -1
+
     Nodo *buscarNodo(Nodo*, int); // retorna el nodo del valor pasado por parámetro
 
 //    Nodo *buscarNodoa(Nodo*, int); // retorna el nodo del valor pasado por parámetro
@@ -74,6 +88,8 @@ private:
     Nodo * nodoMaximo(Nodo*); //Busca el elemento de mayor valor
 
     Nodo *nodoMinimo(Nodo*); //Busca el elemento de menor valor
+
+    int alturaFE(Nodo *); // Calcula el la altura de un nodo;
 
     int nivelRecursivo(Nodo*); //Calcula la nivel de un Arbin
 

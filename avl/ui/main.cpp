@@ -135,15 +135,14 @@ void insertarEnAVL() {
     int ciclos = ingresarNum(msg);
     for (int i = 0; i < ciclos; ++i) {
         msg = "ingrese el valor " + to_string(i + 1);
-//        bool carga = gestor.insertarElem(ingresarNum(msg));
-        bool carga = true;
+        bool carga = gestor.insertarElem(ingresarNum(msg));
         if (carga) {
-            cout << "El valor ingresado se cargó correctamente\n";
+            cout << "Cargado satisfactoriamente el valor ingresado\n";
         } else {
-            cout << "Se produjo un error en la carga...\n";
+            cout << "No se cargó el valor ingresado; ya existe en el árbol AVL\n";
         }
     }
-    cout << "Los valores ingresados en el arbol binario AVL se cargaron satisfactoriamente\n";
+    cout << "Finalizado el procesamiento de datos\n";
 }
 void esVacioAVL(){
     if (gestor.esVacioAVL()) {

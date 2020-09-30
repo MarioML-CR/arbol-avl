@@ -3,6 +3,7 @@
 //
 
 #include "Nodo.h"
+Nodo::Nodo(): num(0), fe(0), izq(nullptr), der(nullptr), padre(nullptr) {}
 
 Nodo::Nodo(int num) : num(num), fe(0), izq(nullptr), der(nullptr), padre(nullptr) {}
 

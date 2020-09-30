@@ -8,6 +8,8 @@
 
 class Nodo {
 public:
+    Nodo();
+
     Nodo(int num);
 
     virtual ~Nodo();
