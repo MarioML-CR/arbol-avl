@@ -85,18 +85,18 @@ bool ArbinAVL::insertarElem(int pValor) {
             Nodo * aux = buscarNodoDesbalance(getRaiz());
             if (aux != nullptr){
                 if (aux->getFe() == 2 && aux->getDer()->getFe() == -1){
-                    cout << "RDI: Padre " << aux->getFe() << " hijo derecho " << aux->getDer()->getFe() << endl ;
+                    cout << "RDI: Padre " << aux->getFe() << " hijo derecho " << aux->getDer()->getFe() << " valor " << aux->getNum() << endl ;
                     // TODO: Eliminar la linea anterior y enviar a balancear
                 } else if (aux->getFe() == 2 && aux->getDer()->getFe() == 1 ||
                         aux->getFe() == 2 && aux->getDer()->getFe() == 0) {
-                    cout << "RSI: Padre " << aux->getFe() << " hijo derecho " << aux->getDer()->getFe() << endl ;
+                    cout << "RSI: Padre " << aux->getFe() << " hijo derecho " << aux->getDer()->getFe() << " valor " << aux->getNum() << endl ;
                     // TODO: Eliminar la linea anterior y enviar a balancear
                 } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == 1){
-                    cout << "RDD: Padre " << aux->getFe() << " hijo izquierdo " << aux->getIzq()->getFe() << endl ;
+                    cout << "RDD: Padre " << aux->getFe() << " hijo izquierdo " << aux->getIzq()->getFe() << " valor " << aux->getNum() << endl ;
                     // TODO: Eliminar la linea anterior y enviar a balancear
                 } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == -1 ||
                         aux->getFe() == -2 && aux->getIzq()->getFe() == 0) {
-                    cout << "RSD: Padre " << aux->getFe() << " hijo izquierdo " << aux->getIzq()->getFe() << endl ;
+                    cout << "RSD: Padre " << aux->getFe() << " hijo izquierdo " << aux->getIzq()->getFe() << " valor " << aux->getNum() << endl ;
                     // TODO: Eliminar la linea anterior y enviar a balancear
                 }
             }
@@ -314,8 +314,14 @@ Nodo *ArbinAVL::buscarNodoDesbalance(Nodo *nodo) {
                 nodo->getFe() == -2){
             return nodo;
         } else {
-            buscarNodoDesbalance(nodo->getIzq());
-            return buscarNodoDesbalance(nodo->getDer());
+            // TODO: MML solucionar
+            // por la derecha
+//            buscarNodoDesbalance(nodo->getIzq());
+//            return buscarNodoDesbalance(nodo->getDer());
+            // por la izquierda
+            return buscarNodoDesbalance(nodo->getIzq());
+            buscarNodoDesbalance(nodo->getDer());
+
         }
     }
 }
