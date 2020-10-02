@@ -82,7 +82,24 @@ bool ArbinAVL::insertarElem(int pValor) {
         bool insercion = insertarElemRecursivo(getRaiz(), new Nodo(), pValor ,0);
         if (insercion){
             insertarFE(getRaiz());
-            // TODO: enviar a balancear
+            Nodo * aux = buscarNodoDesbalance(getRaiz());
+            if (aux != nullptr){
+                if (aux->getFe() == 2 && aux->getDer()->getFe() == -1){
+                    cout << "RDI: Padre " << aux->getFe() << " hijo derecho " << aux->getDer()->getFe() << endl ;
+                    // TODO: Eliminar la linea anterior y enviar a balancear
+                } else if (aux->getFe() == 2 && aux->getDer()->getFe() == 1 ||
+                        aux->getFe() == 2 && aux->getDer()->getFe() == 0) {
+                    cout << "RSI: Padre " << aux->getFe() << " hijo derecho " << aux->getDer()->getFe() << endl ;
+                    // TODO: Eliminar la linea anterior y enviar a balancear
+                } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == 1){
+                    cout << "RDD: Padre " << aux->getFe() << " hijo izquierdo " << aux->getIzq()->getFe() << endl ;
+                    // TODO: Eliminar la linea anterior y enviar a balancear
+                } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == -1 ||
+                        aux->getFe() == -2 && aux->getIzq()->getFe() == 0) {
+                    cout << "RSD: Padre " << aux->getFe() << " hijo izquierdo " << aux->getIzq()->getFe() << endl ;
+                    // TODO: Eliminar la linea anterior y enviar a balancear
+                }
+            }
             return true;
         } else {
             return false;
@@ -151,10 +168,11 @@ void ArbinAVL::balancearAVL(Nodo * nodo) {
  * posiciones de un árbol cuando su fe (factor de equilibrio) sea dos unidades más alto
  * que el derecho; es decir, que su fe = -2; y ademas, la raíz del sub árbol izquierdo
  * tenga un factor de equilibrio (fe) = -1 ó 0; es decir, que esté cargado a la izquierda.
- * @param nodo          variable de tipo nodo que representa ...
+ * @param nodo          variable de tipo nodo que representa el nodo que debe ser reequilibrado
  * @return              variable de tipo nodo que representa ...
  */
 Nodo *ArbinAVL::rsd(Nodo * nodo) {
+    // TODO: MML Código pendiente
     return nullptr;
 }
 /**
@@ -163,10 +181,11 @@ Nodo *ArbinAVL::rsd(Nodo * nodo) {
  * posiciones de un árbol cuando su fe (factor de equilibrio) sea dos unidades más alto
  * que el derecho; es decir, que su fe = -2; y ademas, la raíz del sub árbol izquierdo
  * tenga un factor de equilibrio (fe) = 1; es decir, que esté cargado a la derecha.
- * @param nodo          variable de tipo nodo que representa ...
- * @return              variable de tipo nodo que representa ...
+ * @param nodo          variable de tipo nodo que representa el nodo que debe ser reequilibrado
+ * @return              variable de tipo nodo que representa el nodo que ha sido equilibrado
  */
 Nodo *ArbinAVL::rdd(Nodo * nodo) {
+    // TODO: MML Código pendiente
     return nullptr;
 }
 /**
@@ -175,10 +194,11 @@ Nodo *ArbinAVL::rdd(Nodo * nodo) {
  * posiciones de un árbol cuando su fe (factor de equilibrio) sea dos unidades más alto
  * que el izquierdo; es decir, que su fe = 2; y ademas, la raíz del sub árbol derecho
  * tenga un factor de equilibrio (fe) = 1 ó 0; es decir, que esté cargado a la derecha.
- * @param nodo          variable de tipo nodo que representa ...
- * @return              variable de tipo nodo que representa ...
+ * @param nodo          variable de tipo nodo que representa el nodo que debe ser reequilibrado
+ * @return              variable de tipo nodo que representa el nodo que ha sido equilibrado
  */
 Nodo *ArbinAVL::rsi(Nodo * nodo) {
+    // TODO: MML Código pendiente
     return nullptr;
 }
 /**
@@ -187,10 +207,11 @@ Nodo *ArbinAVL::rsi(Nodo * nodo) {
  * posiciones de un árbol cuando su fe (factor de equilibrio) sea dos unidades más alto
  * que el izquierdo; es decir, que su fe = 2; y ademas, la raíz del sub árbol derecho
  * tenga un factor de equilibrio (fe) = -1; es decir, que esté cargado a la izquierda.
- * @param nodo          variable de tipo nodo que representa ...
- * @return              variable de tipo nodo que representa ...
+ * @param nodo          variable de tipo nodo que representa el nodo que debe ser reequilibrado
+ * @return              variable de tipo nodo que representa el nodo que ha sido equilibrado
  */
 Nodo *ArbinAVL::rdi(Nodo * nodo) {
+    // TODO: MML Código pendiente
     return nullptr;
 }
 /**
@@ -278,6 +299,28 @@ Nodo *ArbinAVL::buscarNodo(Nodo * nodo, int pValor) {
     }
 }
 /**
+ * Método:              buscarNodoDesbalance
+ * Descripción:         Método recursivo que permite retornar el nodo en el cual ubica
+ * el factor de equilibio (fe) igual a 2 ó -2
+ * @param nodo          variable de tipo nodo que representa la raíz del árbol
+ * @return              variable de tipo nodo que representa el nodo donde se ubica
+ * el fe = 2 ó -2.
+ */
+Nodo *ArbinAVL::buscarNodoDesbalance(Nodo *nodo) {
+    if (nodo == nullptr){
+        return nullptr;
+    } else {
+        if (nodo->getFe() == 2 ||
+                nodo->getFe() == -2){
+            return nodo;
+        } else {
+            buscarNodoDesbalance(nodo->getIzq());
+            return buscarNodoDesbalance(nodo->getDer());
+        }
+    }
+}
+
+/**
  * Método:              esHoja
  * Descripción:         Método que permite establecer si al valor ingresado
  * es hoja o no, si no existe en el arbol o si no hay datos en el árbol AVL.
@@ -336,7 +379,15 @@ int ArbinAVL::nivelRecursivo(Nodo * nodo) {
 int ArbinAVL::altura() {
     return nivel() + 1;
 }
-
+/**
+ * Método:              alturaFE
+ * Descripción:         Método recursivo que permite establecer la altura del nodo
+ * recibido por parámetro.
+ * @param nodo          varible de tipo Nodo que respresenta el hijo del nodo que se
+ * está evaluanco.
+ * @return              variable de tipo int que representa la altura del nodo hijo
+ * que se está evaluando
+ */
 int ArbinAVL::alturaFE(Nodo * nodo) {
     return nivelRecursivo(nodo) + 1;
 }
@@ -513,6 +564,7 @@ string ArbinAVL::postOrdenRecursivo(Nodo * nodo) {
 bool ArbinAVL::eliminarElem(int) {
     return false;
 }
+
 
 
 

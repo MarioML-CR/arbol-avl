@@ -79,7 +79,7 @@ private:
 
     Nodo *buscarNodo(Nodo*, int); // retorna el nodo del valor pasado por parámetro
 
-//    Nodo *buscarNodoa(Nodo*, int); // retorna el nodo del valor pasado por parámetro
+    Nodo *buscarNodoDesbalance(Nodo*); // retorna el nodo del valor pasado por parámetro
 
     Nodo *buscarNodoPadre(int); // etorna el nodo previo del valor pasado por parámetro
 
