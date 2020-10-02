@@ -306,22 +306,19 @@ Nodo *ArbinAVL::buscarNodo(Nodo * nodo, int pValor) {
  * @return              variable de tipo nodo que representa el nodo donde se ubica
  * el fe = 2 ó -2.
  */
+// TODO: MML solucionar
 Nodo *ArbinAVL::buscarNodoDesbalance(Nodo *nodo) {
     if (nodo == nullptr){
         return nullptr;
     } else {
-        if (nodo->getFe() == 2 ||
-                nodo->getFe() == -2){
+        if ((nodo->getFe() == 2 &&
+        (nodo->getDer()->getFe() == 0 || nodo->getDer()->getFe() == 1 || nodo->getDer()->getFe() == -1)) ||
+            nodo->getFe() == -2 &&
+            (nodo->getIzq()->getFe() == 0 || nodo->getIzq()->getFe() == 1 || nodo->getIzq()->getFe() == -1) ) {
             return nodo;
         } else {
-            // TODO: MML solucionar
-            // por la derecha
-//            buscarNodoDesbalance(nodo->getIzq());
-//            return buscarNodoDesbalance(nodo->getDer());
-            // por la izquierda
-            return buscarNodoDesbalance(nodo->getIzq());
-            buscarNodoDesbalance(nodo->getDer());
-
+            buscarNodoDesbalance(nodo->getIzq());
+            return buscarNodoDesbalance(nodo->getDer());
         }
     }
 }
@@ -395,7 +392,8 @@ int ArbinAVL::altura() {
  * que se está evaluando
  */
 int ArbinAVL::alturaFE(Nodo * nodo) {
-    return nivelRecursivo(nodo) + 1;
+    int altura = nivelRecursivo(nodo);
+    return  altura + 1;
 }
 
 /**
