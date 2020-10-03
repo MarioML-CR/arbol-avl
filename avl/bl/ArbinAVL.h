@@ -67,15 +67,15 @@ private:
 
     void insertarFE(Nodo*); // Inserta el factor de equilibrio en cada nodo.
 
-    void balancearAVL(Nodo*); // Modifica la estructura del árbol de forma que quede balanceado.
+    void balancearAVL(); // Modifica la estructura del árbol de forma que quede balanceado.
 
     void rsd(Nodo*); // Modifica la estructura del árbol si fe = -2, y la raíz del sub árbol izq su fe = -1 ó 0
 
-    Nodo *rdd(Nodo *); // Modifica la estructura del árbol si fe = -2, y la raíz del sub árbol der su fe = 1
+    void rdd(Nodo *); // Modifica la estructura del árbol si fe = -2, y la raíz del sub árbol der su fe = 1
 
     void rsi(Nodo*); // Modifica la estructura del árbol si fe = 2, y la raíz del sub árbol der su fe = 1 ó 0
 
-    Nodo *rdi(Nodo *); // Modifica la estructura del árbol si fe = 2, y la raíz del sub árbol der su fe = -1
+    void rdi(Nodo *); // Modifica la estructura del árbol si fe = 2, y la raíz del sub árbol der su fe = -1
 
     Nodo *buscarNodo(Nodo*, int); // retorna el nodo del valor pasado por parámetro
 

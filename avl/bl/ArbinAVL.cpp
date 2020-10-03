@@ -82,26 +82,7 @@ bool ArbinAVL::insertarElem(int pValor) {
         bool insercion = insertarElemRecursivo(getRaiz(), new Nodo(), pValor ,0);
         if (insercion){
             insertarFE(getRaiz());
-            Nodo * aux = buscarNodoDesbalance(getRaiz());
-            if (aux != nullptr){
-                if (aux->getFe() == 2 && aux->getDer()->getFe() == -1){
-                    rdi(aux);
-                    cout << "RDI: Padre " << aux->getFe() << " hijo derecho " << aux->getDer()->getFe() << " valor " << aux->getNum() << endl ;
-                    // TODO: Eliminar la linea anterior y enviar a balancear
-                } else if (aux->getFe() == 2 && aux->getDer()->getFe() == 1 ||
-                        aux->getFe() == 2 && aux->getDer()->getFe() == 0) {
-                    rsi(aux);
-                    insertarFE(getRaiz());
-                } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == 1){
-                    rdd(aux);
-                    cout << "RDD: Padre " << aux->getFe() << " hijo izquierdo " << aux->getIzq()->getFe() << " valor " << aux->getNum() << endl ;
-                    // TODO: Eliminar la linea anterior y enviar a balancear
-                } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == -1 ||
-                        aux->getFe() == -2 && aux->getIzq()->getFe() == 0) {
-                    rsd(aux);
-                    insertarFE(getRaiz());
-                }
-            }
+            balancearAVL();
             return true;
         } else {
             return false;
@@ -157,16 +138,33 @@ void ArbinAVL::insertarFE(Nodo * nodo) {
 }
 /**
  * Método:              balancearAVL
- * Descripción:         Método recursivo que verifica si el árbol se encuentra balanceado,
- * y en caso de no se así, procede a balancearlo.
+ * Descripción:         Método que verifica si el árbol se encuentra balanceado,
+ * y en caso de no se así, procede a balancearlo llamando los métodos respectivos.
  * @param nodo          representa el nodo raiz,
  */
-void ArbinAVL::balancearAVL(Nodo * nodo) {
-
+void ArbinAVL::balancearAVL() {
+    Nodo * aux = buscarNodoDesbalance(getRaiz());
+    if (aux != nullptr){
+        if (aux->getFe() == 2 && aux->getDer()->getFe() == -1){
+            rdi(aux);
+            insertarFE(getRaiz());
+        } else if (aux->getFe() == 2 && aux->getDer()->getFe() == 1 ||
+                   aux->getFe() == 2 && aux->getDer()->getFe() == 0) {
+            rsi(aux);
+            insertarFE(getRaiz());
+        } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == 1){
+            rdd(aux);
+            insertarFE(getRaiz());
+        } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == -1 ||
+                   aux->getFe() == -2 && aux->getIzq()->getFe() == 0) {
+            rsd(aux);
+            insertarFE(getRaiz());
+        }
+    }
 }
 /**
  * Método:              rsd
- * Descripción:         (rotación simple derecha) Método recursivo que permite rotar las
+ * Descripción:         (rotación simple derecha) Método que permite rotar las
  * posiciones de un árbol cuando su fe (factor de equilibrio) sea dos unidades más alto
  * que el derecho; es decir, que su fe = -2; y ademas, la raíz del sub árbol izquierdo
  * tenga un factor de equilibrio (fe) = -1 ó 0; es decir, que esté cargado a la izquierda.
@@ -192,20 +190,37 @@ void ArbinAVL::rsd(Nodo * nodo) {
 }
 /**
  * Método:              rdd
- * Descripción:         (rotación doble derecha) Método recursivo que permite rotar las
+ * Descripción:         (rotación doble derecha) Método que permite rotar las
  * posiciones de un árbol cuando su fe (factor de equilibrio) sea dos unidades más alto
  * que el derecho; es decir, que su fe = -2; y ademas, la raíz del sub árbol izquierdo
  * tenga un factor de equilibrio (fe) = 1; es decir, que esté cargado a la derecha.
  * @param nodo          variable de tipo nodo que representa el nodo que debe ser reequilibrado
  * @return              variable de tipo nodo que representa el nodo que ha sido equilibrado
  */
-Nodo *ArbinAVL::rdd(Nodo * nodo) {
-    // TODO: MML Código pendiente
-    return nullptr;
+void ArbinAVL::rdd(Nodo * nodo) {
+    Nodo *p = nodo;
+    Nodo *q = nodo->getIzq();
+    Nodo *r = q->getDer();
+    Nodo * c = r->getDer();
+    Nodo * b = r->getIzq();
+    p->setIzq(c);
+    r->setDer(p);
+    r->setIzq(q);
+    q->setDer(b);
+    if (nodo == getRaiz()){
+        setRaiz(r);
+    } else {
+        Nodo *padre = nodo->getPadre();
+        if (padre->getDer() == nodo){
+            padre->setDer(r);
+        } else {
+            padre->setIzq(r);
+        }
+    }
 }
 /**
  * Método:              rsi
- * Descripción:         (rotación simple izquierda) Método recursivo que permite rotar las
+ * Descripción:         (rotación simple izquierda) Método que permite rotar las
  * posiciones de un árbol cuando su fe (factor de equilibrio) sea dos unidades más alto
  * que el izquierdo; es decir, que su fe = 2; y ademas, la raíz del sub árbol derecho
  * tenga un factor de equilibrio (fe) = 1 ó 0; es decir, que esté cargado a la derecha.
@@ -231,16 +246,33 @@ void ArbinAVL::rsi(Nodo * nodo) {
 }
 /**
  * Método:              rdi
- * Descripción:         (rotación doble izquierda) Método recursivo que permite rotar las
+ * Descripción:         (rotación doble izquierda) Método que permite rotar las
  * posiciones de un árbol cuando su fe (factor de equilibrio) sea dos unidades más alto
  * que el izquierdo; es decir, que su fe = 2; y ademas, la raíz del sub árbol derecho
  * tenga un factor de equilibrio (fe) = -1; es decir, que esté cargado a la izquierda.
  * @param nodo          variable de tipo nodo que representa el nodo que debe ser reequilibrado
  * @return              variable de tipo nodo que representa el nodo que ha sido equilibrado
  */
-Nodo *ArbinAVL::rdi(Nodo * nodo) {
-    // TODO: MML Código pendiente
-    return nullptr;
+void ArbinAVL::rdi(Nodo * nodo) {
+    Nodo *p = nodo;
+    Nodo *q = nodo->getDer();
+    Nodo *r = q->getIzq();
+    Nodo * c = r->getDer();
+    Nodo * b = r->getIzq();
+    p->setDer(b);
+    r->setDer(q);
+    r->setIzq(p);
+    q->setIzq(c);
+    if (nodo == getRaiz()){
+        setRaiz(r);
+    } else {
+        Nodo *padre = nodo->getPadre();
+        if (padre->getDer() == nodo){
+            padre->setDer(r);
+        } else {
+            padre->setIzq(r);
+        }
+    }
 }
 /**
  * Método:              buscarMaximo
