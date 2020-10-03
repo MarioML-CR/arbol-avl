@@ -69,11 +69,11 @@ private:
 
     void balancearAVL(Nodo*); // Modifica la estructura del árbol de forma que quede balanceado.
 
-    Nodo *rsd(Nodo*); // Modifica la estructura del árbol si fe = -2, y la raíz del sub árbol izq su fe = -1 ó 0
+    void rsd(Nodo*); // Modifica la estructura del árbol si fe = -2, y la raíz del sub árbol izq su fe = -1 ó 0
 
     Nodo *rdd(Nodo *); // Modifica la estructura del árbol si fe = -2, y la raíz del sub árbol der su fe = 1
 
-    Nodo *rsi(Nodo*); // Modifica la estructura del árbol si fe = 2, y la raíz del sub árbol der su fe = 1 ó 0
+    void rsi(Nodo*); // Modifica la estructura del árbol si fe = 2, y la raíz del sub árbol der su fe = 1 ó 0
 
     Nodo *rdi(Nodo *); // Modifica la estructura del árbol si fe = 2, y la raíz del sub árbol der su fe = -1
 

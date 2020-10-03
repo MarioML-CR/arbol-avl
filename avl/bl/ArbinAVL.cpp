@@ -85,19 +85,21 @@ bool ArbinAVL::insertarElem(int pValor) {
             Nodo * aux = buscarNodoDesbalance(getRaiz());
             if (aux != nullptr){
                 if (aux->getFe() == 2 && aux->getDer()->getFe() == -1){
+                    rdi(aux);
                     cout << "RDI: Padre " << aux->getFe() << " hijo derecho " << aux->getDer()->getFe() << " valor " << aux->getNum() << endl ;
                     // TODO: Eliminar la linea anterior y enviar a balancear
                 } else if (aux->getFe() == 2 && aux->getDer()->getFe() == 1 ||
                         aux->getFe() == 2 && aux->getDer()->getFe() == 0) {
-                    cout << "RSI: Padre " << aux->getFe() << " hijo derecho " << aux->getDer()->getFe() << " valor " << aux->getNum() << endl ;
-                    // TODO: Eliminar la linea anterior y enviar a balancear
+                    rsi(aux);
+                    insertarFE(getRaiz());
                 } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == 1){
+                    rdd(aux);
                     cout << "RDD: Padre " << aux->getFe() << " hijo izquierdo " << aux->getIzq()->getFe() << " valor " << aux->getNum() << endl ;
                     // TODO: Eliminar la linea anterior y enviar a balancear
                 } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == -1 ||
                         aux->getFe() == -2 && aux->getIzq()->getFe() == 0) {
-                    cout << "RSD: Padre " << aux->getFe() << " hijo izquierdo " << aux->getIzq()->getFe() << " valor " << aux->getNum() << endl ;
-                    // TODO: Eliminar la linea anterior y enviar a balancear
+                    rsd(aux);
+                    insertarFE(getRaiz());
                 }
             }
             return true;
@@ -171,9 +173,22 @@ void ArbinAVL::balancearAVL(Nodo * nodo) {
  * @param nodo          variable de tipo nodo que representa el nodo que debe ser reequilibrado
  * @return              variable de tipo nodo que representa ...
  */
-Nodo *ArbinAVL::rsd(Nodo * nodo) {
-    // TODO: MML Código pendiente
-    return nullptr;
+void ArbinAVL::rsd(Nodo * nodo) {
+    Nodo *p = nodo;
+    Nodo *q = nodo->getIzq();
+    Nodo * b = q->getDer();
+    p->setIzq(b);
+    q->setDer(p);
+    if (nodo == getRaiz()){
+        setRaiz(q);
+    } else {
+        Nodo *padre = nodo->getPadre();
+        if (padre->getDer() == nodo){
+            padre->setDer(q);
+        } else {
+            padre->setIzq(q);
+        }
+    }
 }
 /**
  * Método:              rdd
@@ -197,9 +212,22 @@ Nodo *ArbinAVL::rdd(Nodo * nodo) {
  * @param nodo          variable de tipo nodo que representa el nodo que debe ser reequilibrado
  * @return              variable de tipo nodo que representa el nodo que ha sido equilibrado
  */
-Nodo *ArbinAVL::rsi(Nodo * nodo) {
-    // TODO: MML Código pendiente
-    return nullptr;
+void ArbinAVL::rsi(Nodo * nodo) {
+    Nodo *p = nodo;
+    Nodo *q = nodo->getDer();
+    Nodo * b = p->getDer()->getIzq();
+    p->setDer(b);
+    q->setIzq(p);
+    if (nodo == getRaiz()){
+        setRaiz(q);
+    } else {
+        Nodo *padre = nodo->getPadre();
+        if (padre->getDer() == nodo){
+            padre->setDer(q);
+        } else {
+            padre->setIzq(q);
+        }
+    }
 }
 /**
  * Método:              rdi
