@@ -625,8 +625,69 @@ string ArbinAVL::postOrdenRecursivo(Nodo * nodo) {
  * @param pValor        variable de tipo int que representa el valor a eliminar
  * @return              variable de tipo bool (true si lo eliminó, falso caso contrario)
  */
-bool ArbinAVL::eliminarElem(int) {
-    return false;
+bool ArbinAVL::eliminarElem(int pValor) {
+    Nodo * nodo = buscarNodo(getRaiz(),pValor);
+    if (nodo == nullptr){
+        return false;
+    } else {
+        bool eliminar = eliminarIzq(nodo);
+        if (eliminar){
+            insertarFE(getRaiz());
+            balancearAVL();
+        }
+        return true;
+    }
+}
+/**
+ * Método:              eliminarIzq
+ * Descripción:         Método que permite eliminar un elemento del árbol
+ * utilizando la opción de eliminar por la izquierda cuando el elemento a
+ * eliminar presenta dos ramas
+ * @param nodo          variable de tipo no que representa el nodo del elemento
+ * a eliminar
+ * @return              variable de tipo bool si se eliminó retorna true, false
+ * caso contrario.
+ */
+bool ArbinAVL::eliminarIzq(Nodo * nodo) {
+    Nodo * a = nodo;
+    Nodo * padreA = nodo->getPadre();
+    Nodo * b = a->getIzq();
+    Nodo * c = a->getDer();
+    Nodo * d = nodoMaximo(a);
+//    Nodo * padreD = d->getPadre();
+    Nodo * e = d->getIzq();
+    if (nodo->getIzq() != nullptr & nodo->getDer() != nullptr){
+        if (b->getDer() == nullptr){
+            b->setDer(c);
+        } else {
+            b->setDer(e);
+            d->setIzq(b);
+            d->setDer(c);
+        }
+        if (nodo == getRaiz()){
+            setRaiz(d);
+        }
+    } else if (nodo->getIzq() != nullptr & nodo->getDer() == nullptr ||
+            nodo->getIzq() == nullptr & nodo->getDer() != nullptr){
+        if (padreA->getIzq() == nodo){
+            padreA->setIzq(b);
+        } else {
+            padreA->setDer(b);
+        }
+    } else {
+        if (nodo == getRaiz()){
+            setRaiz(nullptr);
+        } else {
+            if (padreA->getIzq() == nodo){
+                padreA->setIzq(nullptr);
+            } else {
+                padreA->setDer(nullptr);
+            }
+        }
+    }
+    setPeso(getPeso() - 1);
+    delete a;
+    return true;
 }
 
 

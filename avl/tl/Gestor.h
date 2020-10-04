@@ -45,6 +45,7 @@ public:
     string postOrden(); // Imprime el Arbin de forma IDR (izquierda - derecha - raíz)
 
     string eliminarElem(int); //Elimina un elemento del Arbin.
+
 private:
     ArbinAVL *arbolAVL;
 };

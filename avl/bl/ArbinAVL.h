@@ -81,10 +81,6 @@ private:
 
     Nodo *buscarNodoDesbalance(Nodo*); // retorna el nodo del valor pasado por parámetro
 
-    Nodo *buscarNodoPadre(int); // etorna el nodo previo del valor pasado por parámetro
-
-//    Nodo *buscarNodoPadre(Nodo *); // etorna el nodo previo del valor pasado por parámetro
-
     Nodo * nodoMaximo(Nodo*); //Busca el elemento de mayor valor
 
     Nodo *nodoMinimo(Nodo*); //Busca el elemento de menor valor
@@ -103,7 +99,7 @@ private:
 
     string postOrdenRecursivo(Nodo*); // Imprime el Arbin de forma IDR (izquierda - derecha - raíz)
 
-    bool  eliminarIzq(Nodo *, int);
+    bool  eliminarIzq(Nodo *);
 
     bool eliminarNodoXDer(Nodo *);
 
