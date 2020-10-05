@@ -631,7 +631,7 @@ bool ArbinAVL::eliminarElem(int pValor) {
         return false;
     } else {
         bool eliminar = eliminarIzq(nodo);
-        if (eliminar){
+        if (eliminar && getRaiz() != nullptr){
             insertarFE(getRaiz());
             balancearAVL();
         }
@@ -649,44 +649,66 @@ bool ArbinAVL::eliminarElem(int pValor) {
  * caso contrario.
  */
 bool ArbinAVL::eliminarIzq(Nodo * nodo) {
-    Nodo * a = nodo;
-    Nodo * padreA = nodo->getPadre();
-    Nodo * b = a->getIzq();
-    Nodo * c = a->getDer();
-    Nodo * d = nodoMaximo(a);
-//    Nodo * padreD = d->getPadre();
-    Nodo * e = d->getIzq();
-    if (nodo->getIzq() != nullptr & nodo->getDer() != nullptr){
-        if (b->getDer() == nullptr){
-            b->setDer(c);
-        } else {
-            b->setDer(e);
-            d->setIzq(b);
-            d->setDer(c);
-        }
+    Nodo * a = nodo->getPadre(); // nodo padre del elemento a eliminar
+    Nodo * b = nodo; // nodo del elemento a eliminar
+    Nodo * c = b->getIzq(); // nodo izquierdo del elemento a eliminar
+    Nodo * d = b->getDer(); // nodo derecho del elemento a eliminar
+    Nodo * f;
+    Nodo * e;
+    Nodo * g;
+    if (c == nullptr){
+        f = d;
+        e = nullptr; // nodo padre del nodo máximo
+        g = nullptr; // nodo izquierdo del nodo máximo
+    } else {
+        f = nodoMaximo(c); // nodo máximo por la izquierda
+        e = f->getPadre(); // nodo padre del nodo máximo
+        g = f->getIzq(); // nodo izquierdo del nodo máximo
+    }
+    if (nodo->getIzq() != nullptr & nodo->getDer() != nullptr){ // tiene dos hojas
         if (nodo == getRaiz()){
-            setRaiz(d);
+            setRaiz(f);
+        } else {
+            if (a->getIzq() == nodo){ // el nodo a eliminar corresponde a la rama izquierda del padre a eliminar
+                a->setIzq(f);
+            } else { // el nodo a eliminar corresponde a la rama derecha del padre a eliminar
+                a->setDer(f);
+            }
+        }
+        f->setDer(d);
+        if (b == e && c == f){ // caso 1
+            f->setIzq(g);
+        } else if (c == e && g == nullptr){ // caso 2
+            f->setIzq(c);
+            e->setDer(g);
+        } else { // caso 3
+            f->setIzq(c);
+            e->setDer(g);
         }
     } else if (nodo->getIzq() != nullptr & nodo->getDer() == nullptr ||
-            nodo->getIzq() == nullptr & nodo->getDer() != nullptr){
-        if (padreA->getIzq() == nodo){
-            padreA->setIzq(b);
+            nodo->getIzq() == nullptr & nodo->getDer() != nullptr){ // tiene una hoja, izquierda o derecha caso 4 y 5
+        if (b == getRaiz()){
+            setRaiz(c);
         } else {
-            padreA->setDer(b);
-        }
-    } else {
-        if (nodo == getRaiz()){
-            setRaiz(nullptr);
-        } else {
-            if (padreA->getIzq() == nodo){
-                padreA->setIzq(nullptr);
+            if (a->getIzq() == nodo){
+                a->setIzq(d);
             } else {
-                padreA->setDer(nullptr);
+                a->setDer(c);
+            }
+        }
+    } else { // es hoja caso 6
+        if (b == getRaiz()){ // es raíz
+            setRaiz(nullptr);
+        } else { // no es raíz
+            if (a->getIzq() == nodo){ // el nodo a eliminar corresponde a la rama izquierda del padre a eliminar
+                a->setIzq(nullptr);
+            } else { // el nodo a eliminar corresponde a la rama derecha del padre a eliminar
+                a->setDer(nullptr);
             }
         }
     }
     setPeso(getPeso() - 1);
-    delete a;
+    delete b;
     return true;
 }
 
