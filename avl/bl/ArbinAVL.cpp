@@ -175,17 +175,24 @@ void ArbinAVL::rsd(Nodo * nodo) {
     Nodo *p = nodo;
     Nodo *q = nodo->getIzq();
     Nodo * b = q->getDer();
+    Nodo *padre = nodo->getPadre();
     p->setIzq(b);
+    if (b != nullptr){
+        b->setPadre(p);
+    }
     q->setDer(p);
+    p->setPadre(q);
     if (nodo == getRaiz()){
         setRaiz(q);
+        q->setPadre(nullptr);
     } else {
-        Nodo *padre = nodo->getPadre();
+
         if (padre->getDer() == nodo){
             padre->setDer(q);
         } else {
             padre->setIzq(q);
         }
+        q->setPadre(padre);
     }
 }
 /**
@@ -203,19 +210,29 @@ void ArbinAVL::rdd(Nodo * nodo) {
     Nodo *r = q->getDer();
     Nodo * c = r->getDer();
     Nodo * b = r->getIzq();
+    Nodo *padre = nodo->getPadre();
     p->setIzq(c);
+    if (c != nullptr){
+        c->setPadre(p);
+    }
     r->setDer(p);
+    p->setPadre(r);
     r->setIzq(q);
+    q->setPadre(r);
     q->setDer(b);
+    if (b != nullptr){
+        b->setPadre(q);
+    }
     if (nodo == getRaiz()){
         setRaiz(r);
+        r->setPadre(nullptr);
     } else {
-        Nodo *padre = nodo->getPadre();
         if (padre->getDer() == nodo){
             padre->setDer(r);
         } else {
             padre->setIzq(r);
         }
+        r->setPadre(padre);
     }
 }
 /**
@@ -231,17 +248,23 @@ void ArbinAVL::rsi(Nodo * nodo) {
     Nodo *p = nodo;
     Nodo *q = nodo->getDer();
     Nodo * b = p->getDer()->getIzq();
+    Nodo *padre = nodo->getPadre();
     p->setDer(b);
+    if (b != nullptr){
+        b->setPadre(p);
+    }
     q->setIzq(p);
+    p->setPadre(q);
     if (nodo == getRaiz()){
         setRaiz(q);
+        q->setPadre(nullptr);
     } else {
-        Nodo *padre = nodo->getPadre();
         if (padre->getDer() == nodo){
             padre->setDer(q);
         } else {
             padre->setIzq(q);
         }
+        q->setPadre(padre);
     }
 }
 /**
@@ -259,19 +282,30 @@ void ArbinAVL::rdi(Nodo * nodo) {
     Nodo *r = q->getIzq();
     Nodo * c = r->getDer();
     Nodo * b = r->getIzq();
+    Nodo *padre = nodo->getPadre();
     p->setDer(b);
+    if (b != nullptr){
+        b->setPadre(p);
+    }
     r->setDer(q);
+    q->setPadre(r);
     r->setIzq(p);
+    p->setPadre(r);
     q->setIzq(c);
+    if(c != nullptr){
+        c->setPadre(q);
+    }
     if (nodo == getRaiz()){
         setRaiz(r);
+        r->setPadre(nullptr);
     } else {
-        Nodo *padre = nodo->getPadre();
+
         if (padre->getDer() == nodo){
             padre->setDer(r);
         } else {
             padre->setIzq(r);
         }
+        r->setPadre(padre);
     }
 }
 /**
