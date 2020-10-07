@@ -53,8 +53,10 @@ bool ArbinAVL::esVacioAVL() {
 }
 /**
  * Método:          existeElemento
- * Descripción:     Método que
- * @return
+ * Descripción:     Método que verifica si un elemento ya existe en el árbol
+ * @param pValor    variable de tipo int que representa el elemento que se debe
+ * buscar en el árbol.
+ * @return          variable de tipo bool, si existe retorna true, false caso contrario
  */
 bool ArbinAVL::existeElemento(int pValor) {
     if (getPeso()==0){
@@ -657,14 +659,17 @@ string ArbinAVL::postOrdenRecursivo(Nodo * nodo) {
  * Método:              eliminarElem
  * Descripción:         Método que permite eliminar un elemento del árbol
  * @param pValor        variable de tipo int que representa el valor a eliminar
+ * @param tipo          variable de tipo int que representa la forma de eliminar en caso
+ * que el nodo a eliminar tenga dos hijos; si es 0 elimina por la izquierda, y si es 1
+ * elimina por la derecha.
  * @return              variable de tipo bool (true si lo eliminó, falso caso contrario)
  */
-bool ArbinAVL::eliminarElem(int pValor) {
+bool ArbinAVL::eliminarElem(int pValor, int tipo) {
     Nodo * nodo = buscarNodo(getRaiz(),pValor);
     if (nodo == nullptr){
         return false;
     } else {
-        bool eliminar = eliminarNodo(nodo);
+        bool eliminar = eliminarNodo(nodo, tipo);
         if (eliminar && getRaiz() != nullptr){
             insertarFE(getRaiz());
             balancearAVL();
@@ -672,6 +677,7 @@ bool ArbinAVL::eliminarElem(int pValor) {
         return true;
     }
 }
+
 /**
  * Método:              eliminarNodo
  * Descripción:         Método que permite eliminar un elemento del árbol
@@ -679,16 +685,23 @@ bool ArbinAVL::eliminarElem(int pValor) {
  * eliminar presenta dos ramas
  * @param nodo          variable de tipo no que representa el nodo del elemento
  * a eliminar
+ * @param tipo          variable de tipo int que representa la forma de eliminar en caso
+ * que el nodo a eliminar tenga dos hijos; si es 0 elimina por la izquierda, y si es 1
+ * elimina por la derecha.
  * @return              variable de tipo bool si se eliminó retorna true, false
  * caso contrario.
  */
-bool ArbinAVL::eliminarNodo(Nodo * nodo) {
+bool ArbinAVL::eliminarNodo(Nodo * nodo, int tipo) {
     Nodo * a = nodo->getPadre(); // nodo padre del elemento a eliminar
     Nodo * b = nodo; // nodo del elemento a eliminar
     Nodo * c = b->getIzq(); // nodo izquierdo del elemento a eliminar
     Nodo * d = b->getDer(); // nodo derecho del elemento a eliminar
     if (b->getIzq() != nullptr & b->getDer() != nullptr){ // tiene dos hojas
-        eliminarNodoPorIzq(a,b,c,d);
+        if (tipo == 0){
+            eliminarNodoPorIzq(a,b,c,d);
+        } else {
+            eliminarNodoPorDer(a,b,c,d);
+        }
     } else if (b->getIzq() != nullptr & b->getDer() == nullptr ||
             b->getIzq() == nullptr & b->getDer() != nullptr){ // tiene una hoja, izquierda o derecha caso 4 y 5
         if (b == getRaiz()){
@@ -715,20 +728,19 @@ bool ArbinAVL::eliminarNodo(Nodo * nodo) {
     delete b;
     return true;
 }
-
+/**
+ * Método:              eliminarNodoPorIzq
+ * Descripción:         Método que permite eliminar un nodo que tiene dos hijos y la
+ * eliminación es por la izquierda.
+ * @param a             variable de tipo Nodo que representa el nodo padre del elemento a eliminar
+ * @param b             variable de tipo Nodo que representa el nodo a eliminar
+ * @param c             variable de tipo Nodo que representa el nodo izquierdo del elemento a eliminar
+ * @param d             variable de tipo Nodo que representa el nodo derecho del elemento a eliminar
+ */
 void ArbinAVL::eliminarNodoPorIzq(Nodo * a, Nodo * b, Nodo * c, Nodo * d) {
-    Nodo * f; // nodo máximo por la izquierda
-    Nodo * e; // nodo padre del nodo máximo
-    Nodo * g; // nodo izquierdo del nodo máximo
-    if (c == nullptr){
-        f = d;
-        e = nullptr;
-        g = nullptr;
-    } else {
-        f = nodoMaximo(c);
-        e = f->getPadre();
-        g = f->getIzq();
-    }
+    Nodo * f = nodoMaximo(c); // nodo máximo por la izquierda
+    Nodo * e = f->getPadre(); // nodo padre del nodo máximo
+    Nodo * g = f->getIzq(); // nodo izquierdo del nodo máximo
     if (b == getRaiz()){
         setRaiz(f);
     } else {
@@ -741,20 +753,88 @@ void ArbinAVL::eliminarNodoPorIzq(Nodo * a, Nodo * b, Nodo * c, Nodo * d) {
     f->setDer(d);
     if (b == e && c == f){ // caso 1
         f->setIzq(g);
-    } else if (c == e && g == nullptr){ // caso 2
-        f->setIzq(c);
-        e->setDer(g);
-    } else { // caso 3
+    } else { // caso 2 y 3
         f->setIzq(c);
         e->setDer(g);
     }
 }
-
+/**
+ * Método:              eliminarNodoPorDer
+ * Descripción:         Método que permite eliminar un nodo que tiene dos hijos y la
+ * eliminación es por la derecha.
+ * @param a             variable de tipo Nodo que representa el nodo padre del elemento a eliminar
+ * @param b             variable de tipo Nodo que representa el nodo a eliminar
+ * @param c             variable de tipo Nodo que representa el nodo izquierdo del elemento a eliminar
+ * @param d             variable de tipo Nodo que representa el nodo derecho del elemento a eliminar
+ */
 void ArbinAVL::eliminarNodoPorDer(Nodo * a, Nodo * b, Nodo * c, Nodo * d) {
-
+    Nodo * f = nodoMinimo(d); // nodo mínimo por la derecha
+    Nodo * e = f->getPadre(); // nodo padre del nodo mínimo
+    Nodo * g = f->getDer(); // nodo derecho del nodo mínimo
+    if (b == getRaiz()){
+        setRaiz(f);
+    } else {
+        if (a->getIzq() == b){ // el nodo a eliminar corresponde a la rama izquierda del padre a eliminar
+            a->setIzq(f);
+        } else { // el nodo a eliminar corresponde a la rama derecha del padre a eliminar
+            a->setDer(f);
+        }
+    }
+    f->setIzq(c);
+    if (b == e && d == f){ // caso 1
+        f->setDer(g);
+    } else { // caso 2
+        f->setDer(d);
+        e->setIzq(g);
+    }
 }
-
-
-
-
-
+/**
+ * Método:              esLleno
+ * Descripción:         Método que permite verificar si un árbol está lleno; es decir, que
+ * todos los nodos tienen dos hijos o ninguno, y sus hojas están al mismo nivel.
+ * @return              variable de tipo bool (true si es completo, falso caso contrario)
+ */
+bool ArbinAVL::esLleno() {
+    int hojas = numHojasRecursivo(getRaiz());
+    int nivel = nivelRecursivo(getRaiz());
+    if (pow(2, nivel) == hojas){
+        return true;
+    } else {
+        return false;
+    }
+}
+/**
+ * Método:              esCompleto
+ * Descripción:         Método que permite verificar si un árbol está completo; lo que
+ * se alcanza si y solo si no existe un nodo con solo un hijo. Un árbol completo puede
+ * estar lleno, pero un árbol compleno no implica que debe estar lleno.
+ * @return              variable de tipo bool (true si es completo, falso caso contrario)
+ */
+bool ArbinAVL::esCompleto() {
+    int completo = esCompletoRecursivo(getRaiz());
+    if (completo > 0){
+        return false;
+    } else {
+        return true;
+    }
+}
+/**
+ * Método:              esCompletoRecursivo
+ * Descripción:         Método recursivo que cuenta el número de nodos que tienen un solo
+ * hijo.
+ * @param nodo          variable de tipo Nodo que representa al árbol que se va a analizar
+ * @return              variable de tipo int que representa el número de nodos que tienen
+ * un sólo hijo
+ */
+int ArbinAVL::esCompletoRecursivo(Nodo * nodo) {
+    if (nodo == nullptr){
+        return 0;
+    } else {
+        if (nodo->getDer() != nullptr && nodo->getIzq() == nullptr ||
+            nodo->getDer() == nullptr && nodo->getIzq() != nullptr){
+            return 1;
+        } else {
+            return esCompletoRecursivo(nodo->getIzq()) + esCompletoRecursivo(nodo->getDer());
+        }
+    }
+}

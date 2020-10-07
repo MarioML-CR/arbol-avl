@@ -44,7 +44,13 @@ public:
 
     string postOrden(); // Imprime el Arbin de forma IDR (izquierda - derecha - raíz)
 
-    string eliminarElem(int); //Elimina un elemento del Arbin.
+    string eliminarElemIzq(int); //Elimina un elemento del Arbin.
+
+    string eliminarElemDer(int); //Elimina un elemento del Arbin.
+
+    string esLleno(); //Retorna si un Arbin es completo o no
+
+    string esCompleto(); // Retorna si un Arbin es completo o no
 
 private:
     ArbinAVL *arbolAVL;

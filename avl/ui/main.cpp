@@ -34,7 +34,10 @@ void camino();
 void preOrden();
 void postOrden();
 void inOrden();
-void eliminarElem();
+void eliminarElemIzq();
+void eliminarElemDer();
+void esLleno();
+void esCompleto();
 
 int main() {
     menu();
@@ -59,7 +62,10 @@ void menu() {
              "11 Imprimir árbol en PREORDEN\n" <<
              "12 Imprimir árbol en POSTORDEN\n" <<
              "13 Imprimir árbol en ORDEN\n" <<
-             "14 Eliminar elemento\n" <<
+             "14 Eliminar elemento - Izquierda\n" <<
+             "15 Elminar elemento - Derecha\n" <<
+             "16 Está lleno?\n" <<
+             "17 Es completo?\n" <<
              "18 Salir\n";
         cin >> valor;
         opcion = validar.ingresarInt(valor);
@@ -108,7 +114,16 @@ void procesarMenu(int & pOpcion, bool & salir) {
             inOrden();
             break;
         case 14:
-            eliminarElem();
+            eliminarElemIzq();
+            break;
+        case 15:
+            eliminarElemDer();
+            break;
+        case 16:
+            esLleno();
+            break;
+        case 17:
+            esCompleto();
             break;
         case 18:
             salir = true;
@@ -142,7 +157,7 @@ void insertarEnAVL() {
             cout << "No se cargó el valor ingresado; ya existe en el árbol AVL\n";
         }
     }
-    cout << "Finalizado el procesamiento de datos\n";
+    cout << "Finalizado el procesamiento de datos ...\n";
 }
 void esVacioAVL(){
     if (gestor.esVacioAVL()) {
@@ -238,12 +253,35 @@ void inOrden(){
         cout << "Aún no se ha ingresado datos al árbol AVL\n";
     }
 }
-void eliminarElem(){
+void eliminarElemIzq(){
     if (!gestor.esVacioAVL()) {
         string msg = "Ingrese el número que desea eliminar del árbol AVL\n";
         int num = ingresarNum(msg);
-        cout << gestor.eliminarElem(num) << endl;
+        cout << gestor.eliminarElemIzq(num) << endl;
     } else {
         cout << "Aún no se ha ingresado datos al árbol AVL\n";
+    }
+}
+void eliminarElemDer(){
+    if (!gestor.esVacioAVL()) {
+        string msg = "Ingrese el número que desea eliminar del árbol AVL\n";
+        int num = ingresarNum(msg);
+        cout << gestor.eliminarElemDer(num) << endl;
+    } else {
+        cout << "Aún no se ha ingresado datos al árbol AVL\n";
+    }
+}
+void esLleno(){
+    if (!gestor.esVacioAVL()) {
+        cout << gestor.esLleno() << endl;
+    } else {
+        cout << "Aún no se ha ingresado datos al árbol AVL\n";
+    }
+}
+void esCompleto(){
+    if (!gestor.esVacioAVL()) {
+        cout << gestor.esCompleto() << endl;
+    } else {
+        cout << "Aún no se ha ingresado datos al árbol\n";
     }
 }

@@ -82,11 +82,35 @@ string Gestor::postOrden() {
     return postOrden;
 }
 
-string Gestor::eliminarElem(int pValor) {
-    bool resultado = getArbolAvl()->eliminarElem(pValor);
+string Gestor::eliminarElemIzq(int pValor) {
+    bool resultado = getArbolAvl()->eliminarElem(pValor, 0);
     if (resultado){
         return "El elemento se eliminó satisfactoriamente\n";
     } else {
         return "El elemento No fue eliminado\n";
+    }
+}
+string Gestor::eliminarElemDer(int pValor) {
+    bool resultado = getArbolAvl()->eliminarElem(pValor, 1);
+    if (resultado){
+        return "El elemento se eliminó satisfactoriamente\n";
+    } else {
+        return "El elemento No fue eliminado\n";
+    }
+}
+string Gestor::esLleno() {
+    bool esLleno = getArbolAvl()->esLleno();
+    if (esLleno){
+        return "El árbol está lleno\n";
+    } else {
+        return "El árbol no está lleno\n";
+    }
+}
+string Gestor::esCompleto() {
+    bool completo = getArbolAvl()->esCompleto();
+    if (completo){
+        return "El árbol está completo\n";
+    } else {
+        return "El árbol no está completo\n";
     }
 }

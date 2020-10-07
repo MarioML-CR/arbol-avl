@@ -52,11 +52,13 @@ public:
 
     string postOrden(); // Imprime el Arbin de forma IDR (izquierda - derecha - raíz)
 
-    bool eliminarElem(int); //Elimina un elemento del Arbin.
+    bool eliminarElem(int, int); //Elimina un elemento del Arbin.
+
+    bool esLleno(); //Retorna si un Arbin es completo o no
+
+    bool esCompleto(); // Retorna si un Arbin es completo o no
 
     // TODO: pendiente de acá en adelante.
-
-    bool esCompleto(); //Retorna si un Arbin es completo o no
 
     bool igualesArbin(); //Dice si dos Arbin son iguales o no.
 private:
@@ -99,11 +101,13 @@ private:
 
     string postOrdenRecursivo(Nodo*); // Imprime el Arbin de forma IDR (izquierda - derecha - raíz)
 
-    bool  eliminarNodo(Nodo *); // Elimina un nodo del árbol
+    bool  eliminarNodo(Nodo *, int); // Elimina un nodo del árbol
 
     void  eliminarNodoPorIzq(Nodo *, Nodo *, Nodo *, Nodo *); // Elimina un nodo que tiene dos hijos por la izq
 
     void eliminarNodoPorDer(Nodo *, Nodo *, Nodo *, Nodo *); // Elimina un nodo que tiene dos hijos por la der
+
+    int esCompletoRecursivo(Nodo *); // Retorna el número de nodos que presentan sólo un hijo
 
 };
 
