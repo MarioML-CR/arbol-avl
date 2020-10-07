@@ -58,9 +58,12 @@ public:
 
     bool esCompleto(); // Retorna si un Arbin es completo o no
 
-    // TODO: pendiente de acá en adelante.
+    bool sonArbolesIguales(Nodo *); // Verifica si dos árboles son iguales
 
-    bool igualesArbin(); //Dice si dos Arbin son iguales o no.
+    bool sonArbolesSemejantes(Nodo *); // Verifica si dos árboles son semejantes
+
+    bool sonArbolesIsomorfos(Nodo *); // Verifica si dos árboles son isomorfos
+
 private:
     Nodo *raiz;
     int peso;
@@ -108,6 +111,8 @@ private:
     void eliminarNodoPorDer(Nodo *, Nodo *, Nodo *, Nodo *); // Elimina un nodo que tiene dos hijos por la der
 
     int esCompletoRecursivo(Nodo *); // Retorna el número de nodos que presentan sólo un hijo
+
+    int sonArbolesIsomorfosRecursivo(Nodo *, Nodo *); // Verifica si dos árboles son isomorfos
 
 };
 

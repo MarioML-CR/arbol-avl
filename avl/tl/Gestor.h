@@ -14,9 +14,17 @@ class Gestor {
 public:
     Gestor();
 
-    ArbinAVL *getArbolAvl() const;
+    ArbinAVL *getArbolAvlA() const;
 
-    void setArbolAvl(ArbinAVL *arbolAvl);
+    void setArbolAvlA(ArbinAVL *arbolAvl);
+
+    ArbinAVL *getArbolAvla() const;
+
+    void setArbolAvla(ArbinAVL *arbolAvla);
+
+    ArbinAVL *getArbolAvlB() const;
+
+    void setArbolAvlB(ArbinAVL *arbolAvlb);
 
     bool insertarElem(int); //Inserta un entero en el árbol ordenado.
 
@@ -52,8 +60,18 @@ public:
 
     string esCompleto(); // Retorna si un Arbin es completo o no
 
+    bool insertarElemB(int); //Inserta un entero en el árbol ordenado.
+
+    string sonArbolesIguales(); // Verifica si dos árboles son iguales
+
+    string sonArbolesSemejantes(); // Verifica si dos árboles son semejantes
+
+    string sonArbolesIsomorfos(); // Verifica si dos árboles son isomorfos
+
 private:
-    ArbinAVL *arbolAVL;
+    ArbinAVL *arbolAVLA;
+
+    ArbinAVL *arbolAVLB;
 };
 
 

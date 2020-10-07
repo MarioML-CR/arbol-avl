@@ -38,6 +38,10 @@ void eliminarElemIzq();
 void eliminarElemDer();
 void esLleno();
 void esCompleto();
+void insertarEnArbolB();
+void sonArbolesIguales();
+void sonArbolesSemejantes();
+void sonArbolesIsomorfos();
 
 int main() {
     menu();
@@ -66,7 +70,11 @@ void menu() {
              "15 Elminar elemento - Derecha\n" <<
              "16 Está lleno?\n" <<
              "17 Es completo?\n" <<
-             "18 Salir\n";
+             "18 Insertar en arbol B\n" <<
+             "19 Los árboles son iguales?\n" <<
+             "20 Los árboles son semejantes?\n" <<
+             "21 Los árboles son isomorfos?\n" <<
+             "22 Salir\n";
         cin >> valor;
         opcion = validar.ingresarInt(valor);
         procesarMenu(opcion, salir);
@@ -126,6 +134,18 @@ void procesarMenu(int & pOpcion, bool & salir) {
             esCompleto();
             break;
         case 18:
+            insertarEnArbolB();
+            break;
+        case 19:
+            sonArbolesIguales();
+            break;
+        case 20:
+            sonArbolesSemejantes();
+            break;
+        case 21:
+            sonArbolesIsomorfos();
+            break;
+        case 22:
             salir = true;
             break;
         default:
@@ -281,6 +301,37 @@ void esLleno(){
 void esCompleto(){
     if (!gestor.esVacioAVL()) {
         cout << gestor.esCompleto() << endl;
+    } else {
+        cout << "Aún no se ha ingresado datos al árbol\n";
+    }
+}
+void insertarEnArbolB(){
+    string msg = "Ingrese la cantidad de números que desea cargar al árbol\n";
+    int ciclos = ingresarNum(msg);
+    for (int i = 0; i < ciclos; ++i) {
+        msg = "ingrese el valor " + to_string(i + 1);
+        bool carga = gestor.insertarElemB(ingresarNum(msg));
+        if (carga) {
+            cout << "El valor ingresado se cargó correctamente\n";
+        } else {
+            cout << "No se cargó el valor ingresado; ya existe en el árbol\n";
+        }
+    }
+    cout << "Finalizado el procesamiento de datos ...\n";
+}
+void sonArbolesIguales(){
+    cout << gestor.sonArbolesIguales() << endl;
+}
+void sonArbolesSemejantes(){
+    if (!gestor.esVacioAVL()) {
+        cout << gestor.sonArbolesSemejantes() << endl;
+    } else {
+        cout << "Aún no se ha ingresado datos al árbol\n";
+    }
+}
+void sonArbolesIsomorfos(){
+    if (!gestor.esVacioAVL()) {
+        cout << gestor.sonArbolesIsomorfos() << endl;
     } else {
         cout << "Aún no se ha ingresado datos al árbol\n";
     }
