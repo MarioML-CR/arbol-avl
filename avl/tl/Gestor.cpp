@@ -6,6 +6,7 @@
 
 Gestor::Gestor() {
     arbolAVLA = new ArbinAVL();
+    arbolAVLB = new ArbinAVL();
 }
 
 ArbinAVL *Gestor::getArbolAvlA() const {
