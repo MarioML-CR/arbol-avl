@@ -17,14 +17,14 @@ Formalmente, en los árboles AVL se debe cumplir el hecho de que para cualquier 
 ##Árboles binarios
 Un árbol binario es un árbol cuyos nodos no pueden tener más de dos subárboles. En un árbol binario, cada nodo puede tener cero, uno o dos hijos (subárboles). Se conoce el nodo de la izquier- da como hijo izquierdo y el nodo de la derecha como hijo derecho.
 
-##Recorridos
+##Recorrido
 Existen tres tipos:
 ###Pre-orden (RID):
-   Se recorre la raíz
-   
-   En preorden el subárbol izquierdo
-   
-   En preorden el subárbol derecho
+Se recorre la raíz
+
+En preorden el subárbol izquierdo
+
+En preorden el subárbol derecho
 ###In-orden(IRD):
 Se recorre en In-orden el subárbol izquierdo
 
