@@ -74,6 +74,8 @@ private:
 
     void balancearAVL(); // Modifica la estructura del árbol de forma que quede balanceado.
 
+    void verificarValance(Nodo*); // Modifica la estructura del árbol de forma que quede balanceado.
+
     void rsd(Nodo*); // Modifica la estructura del árbol si fe = -2, y la raíz del sub árbol izq su fe = -1 ó 0
 
     void rdd(Nodo *); // Modifica la estructura del árbol si fe = -2, y la raíz del sub árbol der su fe = 1

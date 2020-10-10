@@ -84,7 +84,8 @@ bool ArbinAVL::insertarElem(int pValor) {
         bool insercion = insertarElemRecursivo(getRaiz(), new Nodo(), pValor ,0);
         if (insercion){
             insertarFE(getRaiz());
-            balancearAVL();
+            verificarValance(getRaiz());
+            insertarFE(getRaiz());
             return true;
         } else {
             return false;
@@ -142,8 +143,8 @@ void ArbinAVL::insertarFE(Nodo * nodo) {
  * Método:              balancearAVL
  * Descripción:         Método que verifica si el árbol se encuentra balanceado,
  * y en caso de no se así, procede a balancearlo llamando los métodos respectivos.
- * @param nodo          representa el nodo raiz,
  */
+ // TODO: Este método no se utiliza ya que no se logró resolver el método balancearAVL()
 void ArbinAVL::balancearAVL() {
     Nodo * aux = buscarNodoDesbalance(getRaiz());
     if (aux != nullptr){
@@ -162,6 +163,32 @@ void ArbinAVL::balancearAVL() {
             rsd(aux);
             insertarFE(getRaiz());
         }
+    }
+}
+/**
+ * Método:              verificarValance
+ * Descripción:         Método recursivo que verifica si el árbol no está balanceado,
+ * siguiendo cuatro criterio de RSD, RDD, RDI y RSI, si encuantra uno de estos los
+ * envía a balancear
+ * @param nodo          representa el nodo raiz,
+ */
+void ArbinAVL::verificarValance(Nodo * nodo) {
+    if (nodo == nullptr){
+        return;
+    } else if (nodo->getFe() == 2 && nodo->getDer()->getFe() == -1){
+        rdi(nodo);
+    } else if (nodo->getFe() == 2 && nodo->getDer()->getFe() == 1 ||
+            nodo->getFe() == 2 && nodo->getDer()->getFe() == 0) {
+        rsi(nodo);
+        insertarFE(getRaiz());
+    } else if (nodo->getFe() == -2 && nodo->getIzq()->getFe() == 1){
+        rdd(nodo);
+    } else if (nodo->getFe() == -2 && nodo->getIzq()->getFe() == -1 ||
+            nodo->getFe() == -2 && nodo->getIzq()->getFe() == 0) {
+        rsd(nodo);
+    } else {
+        verificarValance(nodo->getIzq());
+        verificarValance(nodo->getDer());
     }
 }
 /**
@@ -301,7 +328,6 @@ void ArbinAVL::rdi(Nodo * nodo) {
         setRaiz(r);
         r->setPadre(nullptr);
     } else {
-
         if (padre->getDer() == nodo){
             padre->setDer(r);
         } else {
@@ -402,15 +428,15 @@ Nodo *ArbinAVL::buscarNodo(Nodo * nodo, int pValor) {
  * @return              variable de tipo nodo que representa el nodo donde se ubica
  * el fe = 2 ó -2.
  */
-// TODO: MML solucionar
+// TODO: MML este método no se implementa ya que no logra devolver el nodo en el caso RDD en segundo nivel
 Nodo *ArbinAVL::buscarNodoDesbalance(Nodo *nodo) {
     if (nodo == nullptr){
         return nullptr;
     } else {
         if ((nodo->getFe() == 2 &&
         (nodo->getDer()->getFe() == 0 || nodo->getDer()->getFe() == 1 || nodo->getDer()->getFe() == -1)) ||
-            nodo->getFe() == -2 &&
-            (nodo->getIzq()->getFe() == 0 || nodo->getIzq()->getFe() == 1 || nodo->getIzq()->getFe() == -1) ) {
+                (nodo->getFe() == -2 &&
+            (nodo->getIzq()->getFe() == 0 || nodo->getIzq()->getFe() == 1 || nodo->getIzq()->getFe() == -1)) ) {
             return nodo;
         } else {
             buscarNodoDesbalance(nodo->getIzq());
@@ -672,7 +698,8 @@ bool ArbinAVL::eliminarElem(int pValor, int tipo) {
         bool eliminar = eliminarNodo(nodo, tipo);
         if (eliminar && getRaiz() != nullptr){
             insertarFE(getRaiz());
-            balancearAVL();
+            verificarValance(getRaiz());
+            insertarFE(getRaiz());
         }
         return true;
     }
@@ -942,3 +969,4 @@ int ArbinAVL::sonArbolesIsomorfosRecursivo(Nodo * nodoA, Nodo * nodoB) {
         }
     }
 }
+
