@@ -25,39 +25,39 @@ Se recorre la raíz
 En preorden el subárbol izquierdo
 
 En preorden el subárbol derecho
-###In-orden(IRD):
+### In-orden(IRD):
 Se recorre en In-orden el subárbol izquierdo
 
 Se recorre la raíz
 
 Se recorre en In-orden el subárbol derecho
 
-###Post-orden(IDR):
+### Post-orden(IDR):
 Se recorre en Post-orden el subárbol izquierdo
 
 Se recorre en Post-orden el subárbol derecho
 
 Se recorre la raíz
 
-###Terminología y conceptos
-##Hoja
+### Terminología y conceptos
+##H oja
 Un elemento e1 es hoja si los dos subárboles asociados son vacíos.
-##No terminal
+## No terminal
 Todo elemento de un árbol binario que no es hoja es un elemento no terminal o interior.
-###Camino
+### Camino
 Existe camino entre e1 y e2 si se puede ir desde e1, de elemento en elemento siguiendo la relación padre-hijo, hasta llegar a e2.
-###El camino
+### El camino
 Entre e1 y e2 es una secuencia única de los elementos del árbol por donde se pasa desde e1 hasta llegar a e2.
-###Longitud
+### Longitud
 Es la entre el fin y el principio del camino, (número de elementos - 1).
-###Nivel
+### Nivel
 Es la longitud del camino que parte desde la raíz hasta él.
-###Altura
+### Altura
 Es la longitud del camino más largo que parte de la raíz, más 1.
-###Peso
+### Peso
 Es el número de elementos.
 
-###Equilibrio
+### Equilibrio
 La distancia de un nodo a la raíz determina la eficiencia con la que puede ser localizado. Por ejemplo, dado cualquier nodo de un árbol, a sus hijos se puede acceder siguiendo sólo un camino de bifurcación o de ramas, el que conduce al nodo deseado. De modo similar, a los nodos en el nivel 2 de un árbol sólo puede accederse siguiendo dos ramas del árbol.
 La característica anterior nos conduce a una característica muy importante de un árbol binario, su **balance** o **equilibrio**. Para determinar si un árbol está equilibrado, se calcula su factor de equilibrio. El **factor de equilibrio** (fe en esta aplicación) de un árbol binario es la diferencia en altura entre los subárboles derecho e izquierdo. Si la altura del subárbol izquierdo es hI y la altura del subárbol derecho hD, entonces el factor de equilibrio del árbol B se determina por la siguiente fórmula: B = hD - hI.
 
