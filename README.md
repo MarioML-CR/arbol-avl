@@ -10,16 +10,16 @@ Notas del curso BISOFT-20 Estructuras de datos del 2020, impartido en la Univers
 
 Un árbol de busqueda auto-balanceable o equilibrado es un arbol de búsqueda que intenta mantener su altura, o el número de niveles de nodos bajo la raíz tan pequeños como sea posible en todo momento, automáticamente. Esto es importante, ya que muchas operaciones en un árbol de búsqueda binaria tardan un tiempo proporcional a la altura del árbol, y los árboles binarios de búsqueda ordinarios pueden tomar alturas muy grandes en situaciones normales, como cuando las claves son insertadas en orden. Mantener baja la altura se consigue habitualmente realizando transformaciones en el árbol, como la rotación de árboles, en momentos clave.
 
-##Árbol AVL
+## Árbol AVL
 En este caso se estudia particularmente el tipo de árbol AVL, que toma su nombre de las iniciales de los apellidos de sus inventores, Georgii Adelson-Velskii y Yevgeniy Landis, fue el primer árbol de búsqueda binario auto-balanceable que se ideó.
 
 Formalmente, en los árboles AVL se debe cumplir el hecho de que para cualquier nodo del árbol, la diferencia entre las alturas de sus subárboles no exceda una unidad.
-##Árboles binarios
+## Árboles binarios
 Un árbol binario es un árbol cuyos nodos no pueden tener más de dos subárboles. En un árbol binario, cada nodo puede tener cero, uno o dos hijos (subárboles). Se conoce el nodo de la izquier- da como hijo izquierdo y el nodo de la derecha como hijo derecho.
 
-##Recorrido
+## Recorrido
 Existen tres tipos:
-###Pre-orden (RID):
+### Pre-orden (RID):
 Se recorre la raíz
 
 En preorden el subárbol izquierdo
@@ -40,7 +40,7 @@ Se recorre en Post-orden el subárbol derecho
 Se recorre la raíz
 
 ### Terminología y conceptos
-##H oja
+## Hoja
 Un elemento e1 es hoja si los dos subárboles asociados son vacíos.
 ## No terminal
 Todo elemento de un árbol binario que no es hoja es un elemento no terminal o interior.
@@ -61,20 +61,20 @@ Es el número de elementos.
 La distancia de un nodo a la raíz determina la eficiencia con la que puede ser localizado. Por ejemplo, dado cualquier nodo de un árbol, a sus hijos se puede acceder siguiendo sólo un camino de bifurcación o de ramas, el que conduce al nodo deseado. De modo similar, a los nodos en el nivel 2 de un árbol sólo puede accederse siguiendo dos ramas del árbol.
 La característica anterior nos conduce a una característica muy importante de un árbol binario, su **balance** o **equilibrio**. Para determinar si un árbol está equilibrado, se calcula su factor de equilibrio. El **factor de equilibrio** (fe en esta aplicación) de un árbol binario es la diferencia en altura entre los subárboles derecho e izquierdo. Si la altura del subárbol izquierdo es hI y la altura del subárbol derecho hD, entonces el factor de equilibrio del árbol B se determina por la siguiente fórmula: B = hD - hI.
 
-###Completos
+### Completos
 Si todos los elementos tienen sus dos subárboles o no tienen ninguno.
 
-###Lleno
+### Lleno
 se denomina al árbol que además de completo todas sus hojas están al mismo nivel.
-##Comparación de árboles
-###Iguales
+## Comparación de árboles
+### Iguales
 Dos árboles son **iguales** si sus reíces son iguales y sus subárboles también. O si ambos son vacíos.
-###Isomorfos
+### Isomorfos
 Dos árboles son **isomorfos** si tienen la misma forma, aunque no tengan los mismos elementos.
-##Semejantes
+## Semejantes
 Dos árboles son **semejantes** si tiene los mismos elementos aunque no sean isomorfos.
 
-##Análisis general de la eficiencia de búsqueda en un ABB.
+## Análisis general de la eficiencia de búsqueda en un ABB.
 La cantidad máxima de comparaciones al realizar una búsqueda en un ABB está determinada por la altura del árbol.
 
 Si un árbol degenera en una lista, se tiene un árbol cuya altura es igual a la cantidad de nodos en el árbol, y el peor caso corresponderá a realizar tantas comparaciones como nodos tenga el árbol.
@@ -99,29 +99,29 @@ Por lo tanto, despejando k, aplicando las leyes de los logaritmos, se obtiene
 
 k = log2(n + 1)
 
-##¿Qué es un árbol balanceado?
+## ¿Qué es un árbol balanceado?
 
 Se considera que un árbol binario está balanceado cuando todos sus niveles, excepto el último, están integrados a la máxima capacidad de nodos.
 
 Las investigaciones respecto a esta estructura de datos no han logrado encontrar una técnica eficiente para manejar árboles de búsqueda completamente balanceados; las propuestas han llegado solo a presentar árboles **parcialmente** balanceados, sin repercutir la eficiencia de las operaciones de inserción y eliminación de nodos. La más común y usada de las técnicas es la de los árboles AVL.
 
-###RSD o Rotación Simple a la Derecha
+### RSD o Rotación Simple a la Derecha
 Esta rotación se usará cuando el subárbol izquierdo de un nodo sea 2 unidades más alto que el derecho, es decir, cuando su FE sea de -2. Y además, la raíz del subárbol izquierdo tenga una FE de -1 ó 0, es decir, que esté cargado a la izquierda o equilibrado.
 
-###RSI Rotación Simple a la Izquierda
+### RSI Rotación Simple a la Izquierda
 Se trata del caso simétrico del anterior. Esta rotación se usará cuando el subárbol derecho de un nodo sea 2 unidades más alto que el izquierdo, es decir, cuando su FE sea de 2. Y además, la raíz del subárbol derecho tenga una FE de 1 ó 0, es decir, que esté cargado a la derecha o esté equilibrado.
 
-###RDD Rotación Doble a la Derecha
+### RDD Rotación Doble a la Derecha
 Esta rotación se usará cuando el subárbol izquierdo de un nodo sea 2 unidades más alto que el derecho, es decir, cuando su FE sea de -2. Y además, la raíz del subárbol izquierdo tenga una FE de 1, es decir, que esté cargado a la derecha.
 
 Este es uno de los posibles árboles que pueden presentar esta estructura, pero hay otras dos posibilidades. El nodo R puede tener una FE de -1, 0 ó 1. En cada uno de esos casos los árboles izquierdo y derecho de R (B y C) pueden tener alturas de n y n-1, n y n, o n-1 y n, respectivamente.
 
-###RDI Rotación Doble a la Izquierda
+### RDI Rotación Doble a la Izquierda
 Esta rotación se usará cuando el subárbol derecho de un nodo sea 2 unidades más alto que el izquierdo, es decir, cuando su FE sea de 2. Y además, la raíz del subárbol derecho tenga una FE de -1, es decir, que esté cargado a la izquierda. Se trata del caso simétrico del anterior.
 
-###Reequilibrio en árboles AVL por inserción de un nodo
+### Reequilibrio en árboles AVL por inserción de un nodo
 Cuando el valor de FE de un nodo tome el valor -2 ó 2, no seguiremos el camino, sino que, con el valor de FE de el nodo actual y el del nodo derecho si FE es 2 o el del nodo izquierdo si es -2, determinaremos qué tipo de rotación debemos hacer.
 
-##Reequilibrio en árboles AVL por borrado de un nodo
+### Reequilibrio en árboles AVL por borrado de un nodo
 Al igual que en el caso del reequilibrio por inserción, al eliminar un nodo se debe verificar si está desbalanceado, y de sere así se debe proceder a su rebalanceo, usuando la rotación que eplique en el caso en particular.
 
