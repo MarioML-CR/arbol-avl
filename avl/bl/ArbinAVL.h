@@ -72,9 +72,9 @@ private:
 
     void insertarFE(Nodo*); // Inserta el factor de equilibrio en cada nodo.
 
-    void balancearAVL(); // Modifica la estructura del árbol de forma que quede balanceado.
+    int desbalance(Nodo*); // Verificar si el árbol está desbalanceado.
 
-    void verificarValance(Nodo*); // Modifica la estructura del árbol de forma que quede balanceado.
+    void administrarBalance(Nodo*); // Modifica la estructura del árbol de forma que quede balanceado.
 
     void rsd(Nodo*); // Modifica la estructura del árbol si fe = -2, y la raíz del sub árbol izq su fe = -1 ó 0
 

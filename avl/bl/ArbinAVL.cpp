@@ -84,8 +84,10 @@ bool ArbinAVL::insertarElem(int pValor) {
         bool insercion = insertarElemRecursivo(getRaiz(), new Nodo(), pValor ,0);
         if (insercion){
             insertarFE(getRaiz());
-            verificarValance(getRaiz());
-            insertarFE(getRaiz());
+            while (desbalance(getRaiz()) > 0){ // verifica si hay desbalance
+                administrarBalance(getRaiz());
+                insertarFE(getRaiz());
+            }
             return true;
         } else {
             return false;
@@ -140,39 +142,31 @@ void ArbinAVL::insertarFE(Nodo * nodo) {
     }
 }
 /**
- * Método:              balancearAVL
- * Descripción:         Método que verifica si el árbol se encuentra balanceado,
- * y en caso de no se así, procede a balancearlo llamando los métodos respectivos.
+ * Método:              desbalance
+ * Descripción:         Método que verifica si el árbol se encuentra desbalanceado,
+ * y si lo hay retorna un valor mayor a cero, sino retorna 0.
  */
- // TODO: Este método no se utiliza ya que no se logró resolver el método balancearAVL()
-void ArbinAVL::balancearAVL() {
-    Nodo * aux = buscarNodoDesbalance(getRaiz());
-    if (aux != nullptr){
-        if (aux->getFe() == 2 && aux->getDer()->getFe() == -1){
-            rdi(aux);
-            insertarFE(getRaiz());
-        } else if (aux->getFe() == 2 && aux->getDer()->getFe() == 1 ||
-                   aux->getFe() == 2 && aux->getDer()->getFe() == 0) {
-            rsi(aux);
-            insertarFE(getRaiz());
-        } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == 1){
-            rdd(aux);
-            insertarFE(getRaiz());
-        } else if (aux->getFe() == -2 && aux->getIzq()->getFe() == -1 ||
-                   aux->getFe() == -2 && aux->getIzq()->getFe() == 0) {
-            rsd(aux);
-            insertarFE(getRaiz());
+int ArbinAVL::desbalance(Nodo * nodo) {
+    if (nodo == nullptr){
+        return 0;
+    } else {
+        if (nodo->getFe() == 2 || nodo->getFe() == -2 ){
+            return 1;
+        } else {
+            return desbalance(nodo->getIzq()) +
+                    desbalance(nodo->getDer());
         }
     }
 }
 /**
- * Método:              verificarValance
- * Descripción:         Método recursivo que verifica si el árbol no está balanceado,
+ * Método:              administrarBalance
+ * Descripción:         Método recursivo clasifica el desbalance y dependiente de este
+ * así envia a balancear.
  * siguiendo cuatro criterio de RSD, RDD, RDI y RSI, si encuantra uno de estos los
  * envía a balancear
  * @param nodo          representa el nodo raiz,
  */
-void ArbinAVL::verificarValance(Nodo * nodo) {
+void ArbinAVL::administrarBalance(Nodo * nodo) {
     if (nodo == nullptr){
         return;
     } else if (nodo->getFe() == 2 && nodo->getDer()->getFe() == -1){
@@ -187,8 +181,8 @@ void ArbinAVL::verificarValance(Nodo * nodo) {
             nodo->getFe() == -2 && nodo->getIzq()->getFe() == 0) {
         rsd(nodo);
     } else {
-        verificarValance(nodo->getIzq());
-        verificarValance(nodo->getDer());
+        administrarBalance(nodo->getIzq());
+        administrarBalance(nodo->getDer());
     }
 }
 /**
